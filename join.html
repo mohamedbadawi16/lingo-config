@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>انضم إلى لعبة في Lingo</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { --bg:#F5F3FF; --card:#FFFFFF; --text:#1F1B2E; --muted:#6B6880; --primary:#6C5CE7; --border:#E0E0F8; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#12111A; --card:#1F1B2E; --text:#F3F1FF; --muted:#A9A6C0; --primary:#8B7CF6; --border:#3A3A58; } }
+  * { box-sizing: border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:16px;
+         background:var(--bg); color:var(--text); font-family:"Noto Naskh Arabic","Segoe UI",Tahoma,sans-serif; }
+  .card { width:100%; max-width:420px; background:var(--card); border:1px solid var(--border); border-radius:20px; padding:28px 22px; text-align:center; }
+  h1 { font-size:22px; margin:0 0 8px; }
+  p { color:var(--muted); line-height:1.7; margin:0 0 18px; }
+  .code { direction:ltr; font:700 34px/1.2 ui-monospace,Consolas,monospace; letter-spacing:6px; margin:6px 0 20px; color:var(--primary); }
+  a.btn { display:block; padding:14px; border-radius:14px; text-decoration:none; font-weight:700; margin-top:10px; }
+  .primary { background:var(--primary); color:#fff; }
+  .ghost { border:1px solid var(--border); color:var(--text); }
+  .hide { display:none; }
+</style>
+</head>
+<body>
+<main class="card">
+  <h1>🎮 صديقك يدعوك للعب</h1>
+  <p id="lead">افتح تطبيق Lingo لتدخل الغرفة مباشرة.</p>
+  <div id="code" class="code"></div>
+  <a id="open" class="btn primary" href="#">افتح الغرفة في التطبيق</a>
+  <a class="btn ghost" href="https://play.google.com/store/apps/details?id=com.nahrdev.lingo">ليس عندي التطبيق: حمّله من Google Play</a>
+  <p id="hint" class="hide" style="margin-top:18px">إن لم يفتح التطبيق: افتح Lingo ← ألعاب، واكتب رمز الغرفة أعلاه.</p>
+</main>
+<script>
+  // The link is join.html?c=123456 (6 digits). Open lingo://join/123456; the app joins that room.
+  var code = (new URLSearchParams(location.search).get('c') || '').replace(/\D/g, '').slice(0, 6);
+  var open = document.getElementById('open');
+  if (code.length === 6) {
+    document.getElementById('code').textContent = code;
+    open.href = 'lingo://join/' + code;
+    setTimeout(function () { location.href = open.href; }, 300);
+    setTimeout(function () { document.getElementById('hint').className = ''; }, 2500);
+  } else {
+    document.getElementById('lead').textContent = 'هذا الرابط لا يحمل رمز غرفة. اطلب من صديقك أن يرسل الرابط مرة أخرى.';
+    open.className = 'hide';
+  }
+</script>
+</body>
+</html>
