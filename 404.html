@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lingo</title>
+<script>
+  // A cut or mistyped link (e.g. /join/123456 or a lost "?"): if it still holds a 6-digit room code, open the join
+  // page with it; otherwise go to the Lingo page.
+  var m = decodeURIComponent(location.href).match(/(\d{6})(?!.*\d{6})/);
+  location.replace('/lingo-config/' + (m ? 'join.html?c=' + m[1] : ''));
+</script>
+</head>
+<body style="font-family:sans-serif;text-align:center;padding:40px">
+  <a href="/lingo-config/">Lingo</a>
+</body>
+</html>
